@@ -5,51 +5,41 @@ const port = process.env.PORT || 3000;
 const { Client } = require('pg');
 const Sequelize = require('sequelize');
 // var sequelize = new Sequelize('todo_database', 'postgres', '1234');
-// const sequelize = new Sequelize('postgres://user:postgres:1234/todo_database')
-const sequelize = new Sequelize('todo_database', 'postgres', '1234', {
   host: 'localhost',
   dialect: 'postgres',
-});
 
 const User = sequelize.define('todo', {
   todo_id: Sequelize.INTEGER,
   description: Sequelize.STRING,
 });
+      title: 'Hello World',
+      version: '1.0.0',
+      servers: ['http://localhost:3000'],
+    },
+  },
+  apis: ['server.js'], // files containing annotations as above
+};
 
-sequelize
-  .sync()
-  .then(() =>
-    User.create({
-      todo_id: 123,
-      description: 'Hello world',
-    })
-  )
-  .then((jane) => {
-    console.log(
-      'got jane here =====',
-      jane.get({
-        plain: true,
-      })
-    );
-  });
-// const client = new Client({
-//     host : 'localhost',
-//     user : 'postgres',
-//     password : '1234',
-//     port : 5432,
-//     database : 'todo_database'
-// })
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
 
-// client.connect().then(() => console.log("connected"))
-// .then(() => {
-//   client.query("INSER INTO todo(description)  ")
-// })
-// .catch(err => console.log("got error =====>" , err))
-// app.get('/', (req, res) => {
-//   console.log('api Called');
-// });
+const openapiSpecification = swaggerJsdoc(options);
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 app.use('/auth', require('./Api/Auth'));
 
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
 app.listen(port);
 console.log('app is listening at port', port);
