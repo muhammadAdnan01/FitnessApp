@@ -1,11 +1,12 @@
-var express = require('express'),
-app = express(),
-port = process.env.PORT || 3000;
+const express = require('express');
 
-app.get('/' , function(req , res){
+const app = express();
+const port = process.env.PORT || 3000;
 
-    console.log("api Called");
-})
+app.get('/', (req, res) => {
+  console.log('api Called');
+});
 
 app.listen(port);
-console.log('app is listening at port',port)
+
+console.log('app is listening at port', port);
