@@ -7,11 +7,7 @@ const port = process.env.PORT || 3000;
 const swaggerJsdoc = require('swagger-jsdoc');
 
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const options = {
   definition: {
@@ -27,7 +23,7 @@ const options = {
 
 const openApiSpecification = swaggerJsdoc(options);
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+// const swaggerDocument = require('./swagger.json');
 
 // -------------- APP ROUTES ------- //
 
