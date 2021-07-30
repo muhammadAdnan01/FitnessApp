@@ -22,7 +22,8 @@ const options = {
       servers: ['http://localhost:3000'],
     },
   },
-  apis: ['server.js'], // files containing annotations as above
+  // apis: ['./Routes/Test*.js'], // files containing annotations as above
+  apis: ['./Routes/Test/*.js'],
 };
 
 const openApiSpecification = swaggerJsdoc(options);
@@ -37,6 +38,9 @@ app.use('/activities', require('./Routes/Activities'));
 app.use('/heartRate', require('./Routes/HeartRate'));
 app.use('/Weight', require('./Routes/Weight'));
 app.use('/SleepDuration', require('./Routes/SleepDuration'));
+app.use('/TestRoute', require('./Routes/Test'));
+
+// app.use('/books', booksRouter);
 
 app.listen(port);
 console.log('app is listening at port', port);
