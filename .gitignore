@@ -6,3 +6,4 @@ npm-debug.log
 .idea/modules.xml
 .idea/vcs.xml
 .idea/nodeDemo.iml
+package-lock.json
