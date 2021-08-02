@@ -6,6 +6,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const swaggerJsdoc = require('swagger-jsdoc');
 
+const { Pool, Client } = require('pg');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -28,6 +30,20 @@ const swaggerUi = require('swagger-ui-express');
 
 // -------------- APP ROUTES ------- //
 
+const client = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'todo_database',
+  password: '1234',
+  port: 3211,
+});
+
+client
+  .connect()
+  .then((res) => {
+    console.log('got response here ======>', res);
+  })
+  .catch((err) => console.error(err));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 app.use('/auth', require('./Routes/Auth'));
 app.use('/activities', require('./Routes/Activities'));
