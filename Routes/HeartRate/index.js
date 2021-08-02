@@ -1,12 +1,10 @@
 const express = require('express');
 
+const heartRate = require('../../Controllers/heartRateController');
+
 const router = express.Router();
 
-router.get('/getHeartRate', (req, res) => {
-  console.log('got authentication request here ');
-});
+router.get('/getHeartRate', heartRate.findAll);
 
-router.post('/postHeartRate', (req, res) => {
-  console.log('got signup request here ');
-});
+router.post('/postHeartRate', heartRate.create);
 module.exports = router;
