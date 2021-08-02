@@ -47,5 +47,6 @@ db.Sequelize = Sequelize;
 db.activities = require('./activities')(sequelize, Sequelize);
 db.heartRate = require('./heartRate')(sequelize, Sequelize);
 db.sleepDurations = require('./sleepDuration')(sequelize, Sequelize);
+db.weight = require('./weight')(sequelize, Sequelize);
 
 module.exports = db;

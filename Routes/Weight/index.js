@@ -1,12 +1,10 @@
 const express = require('express');
+const weightController = require('../../Controllers/weightController');
 
 const router = express.Router();
 
-router.get('/getWeight', (req, res) => {
-  console.log('got authentication request here ');
-});
+router.get('/getWeight', weightController.findAllPublished);
 
-router.post('/postWeight', (req, res) => {
-  console.log('got signup request here ');
-});
+router.post('/postWeight', weightController.create);
+
 module.exports = router;
