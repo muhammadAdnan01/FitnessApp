@@ -4,11 +4,11 @@ const Activities = db.activities;
 
 const { Op } = db.Sequelize;
 
-// Create and Save a new Tutorial
+// Create and Save a new Activity
 exports.create = (req, res) => {};
 
-// Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
+// Find all published Activitiess
+exports.findAllPublished = (req, res) => {
   Activities.findAll()
     .then((data) => {
       res.send(data);
@@ -16,22 +16,22 @@ exports.findAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || 'Some error occurred while retrieving tutorials.',
+          err.message || 'Some error occurred while retrieving Activitiess.',
       });
     });
 };
 
-// Find a single Tutorial with an id
+// Retrieve all Activitiess from the database.
+exports.findAll = (req, res) => {};
+
+// Find a single Activities with an id
 exports.findOne = (req, res) => {};
 
-// Update a Tutorial by the id in the request
+// Update a Activities by the id in the request
 exports.update = (req, res) => {};
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Activities with the specified id in the request
 exports.delete = (req, res) => {};
 
-// Delete all Tutorials from the database.
+// Delete all Activitiess from the database.
 exports.deleteAll = (req, res) => {};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {};

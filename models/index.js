@@ -45,7 +45,7 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.activities = require('./activities')(sequelize, Sequelize);
-
 db.heartRate = require('./heartRate')(sequelize, Sequelize);
+db.sleepDurations = require('./sleepDuration')(sequelize, Sequelize);
 
 module.exports = db;

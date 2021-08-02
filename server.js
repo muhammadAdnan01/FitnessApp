@@ -21,7 +21,7 @@ const options = {
     },
   },
   // apis: ['./Routes/Test*.js'], // files containing annotations as above
-  apis: ['./Routes/Test/*.js'],
+  apis: ['./Routes/Test/*.js', './Routes/HeartRate/*.js'],
 };
 
 const openApiSpecification = swaggerJsdoc(options);
@@ -64,6 +64,5 @@ app.listen(port);
 //   console.log(err, res);
 //   pool.end();
 // });
-
 
 console.log('app is listening at port', port);

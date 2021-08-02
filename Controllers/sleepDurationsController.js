@@ -1,9 +1,6 @@
 const db = require('../models/index');
 
-const { heartRate } = db;
-
-// eslint-disable-next-line import/order
-const moment = require('moment');
+const { sleepDurations } = db;
 
 const { Op } = db.Sequelize;
 
@@ -15,38 +12,35 @@ function validateCreateRequest(req, res) {
       message: 'request body is required',
     });
   }
-  if (!body.systolic) {
+  if (!body.sleepTime) {
     res.status(400).send({
-      message: 'Systolic is Required',
+      message: 'Sleep Time is Required',
     });
   }
-  if (!body.diastolic) {
+  if (!body.awakeTime) {
     res.status(400).send({
-      message: 'diastolic is Required',
+      message: 'Awake Time is Required',
     });
   }
-  if (!body.date || !body.time) {
+  if (!body.date) {
     res.status(400).send({
       message: 'Date Time is Required',
     });
   }
 }
 
-// Create and Save a new HeartRate
+// Create and Save a new Activity
 exports.create = (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
-  const heartRateBody = {
-    Systolic: body.systolic,
-    diastolic: body.diastolic,
+  const sleepDurationsBody = {
+    sleepTime: body.sleepTime,
+    awakeTime: body.awakeTime,
     date: body.date,
-    time: body.time,
-    userID: body.UserID || 23,
+    userID: body.userID || 45,
   };
-
-  // Save HeartRate in the database
-  heartRate
-    .create(heartRateBody)
+  sleepDurations
+    .create(sleepDurationsBody)
     .then((data) => {
       res.send(data);
     })
@@ -58,9 +52,9 @@ exports.create = (req, res) => {
     });
 };
 
-// Find all published HeartRates
+// Find all published Sleep Durations
 exports.findAllPublished = (req, res) => {
-  heartRate
+  sleepDurations
     .findAll()
     .then((data) => {
       res.send(data);
@@ -68,22 +62,23 @@ exports.findAllPublished = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || 'Some error occurred while retrieving HeartRates.',
+          err.message ||
+          'Some error occurred while retrieving Sleep Durations.',
       });
     });
 };
 
-// Retrieve all HeartRates from the database.
+// Retrieve all Sleep Durations from the database.
 exports.findAll = (req, res) => {};
 
-// Find a single HeartRate with an id
+// Find a single Sleep Durations with an id
 exports.findOne = (req, res) => {};
 
-// Update a HeartRate by the id in the request
+// Update a Sleep Durations by the id in the request
 exports.update = (req, res) => {};
 
-// Delete a HeartRate with the specified id in the request
+// Delete a Sleep Durations with the specified id in the request
 exports.delete = (req, res) => {};
 
-// Delete all HeartRates from the database.
+// Delete all Sleep Durations from the database.
 exports.deleteAll = (req, res) => {};
