@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class SleepDuration extends Model {
     /**
@@ -12,15 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  SleepDuration.init({
-    sleepTime: DataTypes.STRING,
-    awakeTime: DataTypes.STRING,
-    date: DataTypes.DATE,
-    userID: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'SleepDuration',
-  });
+  }
+  SleepDuration.init(
+    {
+      sleepTime: DataTypes.STRING,
+      awakeTime: DataTypes.STRING,
+      date: DataTypes.DATE,
+      userID: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'SleepDuration',
+    }
+  );
   return SleepDuration;
 };
