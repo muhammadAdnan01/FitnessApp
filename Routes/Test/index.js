@@ -27,7 +27,7 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: Books
+ *   name: Users
  *   description: The books managing API
  */
 
