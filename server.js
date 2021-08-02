@@ -35,15 +35,10 @@ const client = new Client({
   host: 'localhost',
   database: 'todo_database',
   password: '1234',
-  port: 3211,
+  port: 5432,
 });
 
-client
-  .connect()
-  .then((res) => {
-    console.log('got response here ======>', res);
-  })
-  .catch((err) => console.error(err));
+client.connect().catch((err) => console.error(err));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 app.use('/auth', require('./Routes/Auth'));
 app.use('/activities', require('./Routes/Activities'));
@@ -55,4 +50,20 @@ app.use('/TestRoute', require('./Routes/Test'));
 // app.use('/books', booksRouter);
 
 app.listen(port);
+
+// Get Query postgreSQL
+
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'todo_database',
+//   password: '1234',
+//   port: 5432,
+// });
+// pool.query('SELECT * from todos ', (err, res) => {
+//   console.log(err, res);
+//   pool.end();
+// });
+
+
 console.log('app is listening at port', port);
