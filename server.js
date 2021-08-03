@@ -22,7 +22,7 @@ const options = {
     },
   },
   // apis: ['./Routes/Test*.js'], // files containing annotations as above
-  apis: ['./Routes/Test/*.js'],
+  apis: ['./Routes/Test/*.js', './Routes/HeartRate/*.js'],
 };
 
 const openApiSpecification = swaggerJsdoc(options);

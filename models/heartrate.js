@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-
   HeartRate.init(
     {
-      Systolic: DataTypes.INTEGER,
+      systolic: DataTypes.INTEGER,
+
       diastolic: DataTypes.INTEGER,
       date: DataTypes.DATE,
       time: DataTypes.TIME,

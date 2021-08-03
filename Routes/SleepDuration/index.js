@@ -1,12 +1,10 @@
 const express = require('express');
 
+const sleepDurations = require('../../Controllers/sleepDurationsController');
+
 const router = express.Router();
 
-router.get('/getSleepDuration', (req, res) => {
-  console.log('got authentication request here ');
-});
+router.get('/getSleepDuration', sleepDurations.findAllPublished);
 
-router.post('/postSleepDuration', (req, res) => {
-  console.log('got signup request here ');
-});
+router.post('/postSleepDuration', sleepDurations.create);
 module.exports = router;

@@ -1,9 +1,6 @@
 const db = require('../models/index');
 
-const { heartRate } = db;
-
-// eslint-disable-next-line import/order
-const moment = require('moment');
+const { weight } = db;
 
 const { Op } = db.Sequelize;
 
@@ -15,75 +12,66 @@ function validateCreateRequest(req, res) {
       message: 'request body is required',
     });
   }
-  if (!body.systolic) {
+  if (!body.value) {
     res.status(400).send({
-      message: 'Systolic is Required',
-    });
-  }
-  if (!body.diastolic) {
-    res.status(400).send({
-      message: 'diastolic is Required',
+      message: 'Weight Value is Required',
     });
   }
   if (!body.date || !body.time) {
     res.status(400).send({
-      message: 'Date Time is Required',
+      message: ' Time/date is Required',
     });
   }
 }
 
-// Create and Save a new HeartRate
+// Create and Save a new Activity
 exports.create = (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
-  const heartRateBody = {
-    Systolic: body.systolic,
-    diastolic: body.diastolic,
+  const sleepDurationsBody = {
+    value: body.value,
     date: body.date,
     time: body.time,
-    userID: body.UserID || 23,
+    userID: body.userID || 45,
   };
-
-  // Save HeartRate in the database
-  heartRate
-    .create(heartRateBody)
+  weight
+    .create(sleepDurationsBody)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || 'Some error occurred while creating the HeartRate.',
+          err.message || 'Some error occurred while creating the Weight.',
       });
     });
 };
 
-// Find all published HeartRates
+// Find all published weight
 exports.findAllPublished = (req, res) => {
-  heartRate
+  weight
     .findAll()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving HeartRates.',
+        message: err.message || 'Some error occurred while retrieving weight.',
       });
     });
 };
 
-// Retrieve all HeartRates from the database.
+// Retrieve all weight from the database.
 exports.findAll = (req, res) => {};
 
-// Find a single HeartRate with an id
+// Find a single weight with an id
 exports.findOne = (req, res) => {};
 
-// Update a HeartRate by the id in the request
+// Update a weight by the id in the request
 exports.update = (req, res) => {};
 
-// Delete a HeartRate with the specified id in the request
+// Delete a weight with the specified id in the request
 exports.delete = (req, res) => {};
 
-// Delete all HeartRates from the database.
+// Delete all weight from the database.
 exports.deleteAll = (req, res) => {};
