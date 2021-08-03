@@ -1,24 +1,42 @@
-/* eslint-disable strict */
-
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Activities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
+      title: {
         type: Sequelize.STRING,
       },
-      lastName: {
+      date: {
+        type: Sequelize.DATE,
+      },
+      steps: {
+        type: Sequelize.INTEGER,
+      },
+      startTime: {
+        type: Sequelize.TIME,
+      },
+      endTime: {
+        type: Sequelize.TIME,
+      },
+      distance: {
         type: Sequelize.STRING,
       },
-      email: {
+      moveMinutes: {
         type: Sequelize.STRING,
+      },
+      notes: {
+        type: Sequelize.STRING,
+      },
+      location: {
+        type: Sequelize.STRING,
+      },
+      userID: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +49,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Activities');
   },
 };
