@@ -6,31 +6,31 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      vaue: {
-        type: Sequelize.STRING
+      value: {
+        type: Sequelize.STRING,
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       time: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       userID: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('weights');
-  }
+  },
 };
