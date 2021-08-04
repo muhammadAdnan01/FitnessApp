@@ -12,9 +12,57 @@ const sequelize = new Sequelize('todo_database', 'postgres', '1234', {
 const User = require('./Model/User')(sequelize, Sequelize);
 
 const router = express.Router();
+
+/**
+ * @swagger
+ * components:
+
+ *   schemas:
+ *     UserAuthenticate:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: user email
+ *           value : adnan@adnan.com
+ *         password:
+ *           type: string
+ *           description: user password
+ *
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: user Authenticate
+ */
+
+/**
+ * @swagger
+ * /auth/authenticate:
+ *   post:
+ *     summary: Authenticate User
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: user data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserAuthenticate'
+ */
 router.post('/authenticate', (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    res.status(400).send({
+      success: false,
+      msg: 'Please Enter Email & Password',
+    });
+  }
   User.findOne({
     where: {
       email: req.body.email,
@@ -29,10 +77,6 @@ router.post('/authenticate', (req, res) => {
         });
       }
       const token = jwt.encode(user, 'foo');
-      // const token = jwt.encode(user, 'foo');
-      // const apiToken = jwt.s
-      console.log('user.dataValues.id =======>', user.dataValues.id);
-      console.log('process.env.JWT_KEY', process.env.JWT_KEY);
       const apiToken = jsonwebtoken.sign(
         { id: user.dataValues.id },
         process.env.JWT_KEY,
@@ -58,46 +102,6 @@ router.post('/authenticate', (req, res) => {
     }
     console.log('got user here ====>', user.dataValues.username);
   });
-  // User.findOne(
-  //   {
-  //     where: {
-  //       email: req.body.email,
-  //     },
-  //   },
-  //   // eslint-disable-next-line consistent-return
-  //   (err, user) => {
-  //     console.log('got user here ====>', user);
-  //     if (err) {
-  //       res.status(401).send({
-  //         success: false,
-  //         msg: 'Authentication failed , No User was found',
-  //       });
-  //     } else {
-  //       const passwordIsValid = bcrypt.compareSync(password, user.password);
-  // if (!passwordIsValid) {
-  //   return res.status(401).send({
-  //     accessToken: null,
-  //     message: 'Invalid  Email OR Password!',
-  //   });
-  // }
-
-  // const token = jwt.encode(user, 'foo');
-  // const apiToken = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
-  //   expiresIn: 86400, // 24 hours
-  // });
-
-  // // eslint-disable-next-line no-param-reassign
-  // delete user.password;
-
-  // res.status(200).send({
-  //   success: true,
-  //   token: `JWT${token}`,
-  //   accessToken: apiToken,
-  //   user,
-  // });
-  //     }
-  //   }
-  // );
 });
 
 router.post('/signup', (req, res) => {
@@ -111,7 +115,6 @@ router.post('/signup', (req, res) => {
   } else {
     const hashPassword = bcrypt.hashSync(password, 8);
 
-    // console.log('got Hash here ======>', hashPassword);
     User.findOne({
       where: {
         email: req.body.email,
