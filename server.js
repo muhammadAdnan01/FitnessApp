@@ -43,7 +43,7 @@ app.use('/activities', require('./Routes/Activities'));
 app.use('/heartRate', require('./Routes/HeartRate'));
 app.use('/Weight', require('./Routes/Weight'));
 app.use('/SleepDuration', require('./Routes/SleepDuration'));
-app.use('/TestRoute', require('./Routes/Test'));
+// app.use('/TestRoute', require('./Routes/Test'));
 
 app.listen(port);
 console.log('app is listening at port', port);
