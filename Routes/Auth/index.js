@@ -9,7 +9,8 @@ const sequelize = new Sequelize('todo_database', 'postgres', '1234', {
   port: 5432,
   dialect: 'postgres',
 });
-const User = require('./Model/User')(sequelize, Sequelize);
+const User = require('../../models/user')(sequelize, Sequelize);
+const userAuth = require('../../models/auth')(sequelize, Sequelize);
 
 const router = express.Router();
 
@@ -63,49 +64,71 @@ router.post('/authenticate', (req, res) => {
       msg: 'Please Enter Email & Password',
     });
   }
-  User.findOne({
-    where: {
-      email: req.body.email,
-    },
-  }).then((user) => {
-    if (user) {
-      const passwordIsValid = bcrypt.compareSync(password, user.password);
-      if (!passwordIsValid) {
-        res.status(401).send({
-          accessToken: null,
-          message: 'Invalid  Email OR Password!',
+  userAuth
+    .findOne({
+      where: {
+        email: req.body.email,
+      },
+    })
+    .then((user) => {
+      console.log('got user here ======>', user);
+      if (user) {
+        const passwordIsValid = bcrypt.compareSync(password, user.password);
+        if (!passwordIsValid) {
+          res.status(401).send({
+            accessToken: null,
+            message: 'Invalid  Email OR Password!',
+          });
+        }
+        User.findOne({
+          where: {
+            email: req.body.email,
+          },
+        }).then((userInfo) => {
+          if (userInfo) {
+            const token = jwt.encode(userInfo, 'foo');
+            const apiToken = jsonwebtoken.sign(
+              { id: userInfo.dataValues.id },
+              process.env.JWT_KEY,
+              {
+                expiresIn: 86400, // 24 hours
+              }
+            );
+
+            // eslint-disable-next-line no-param-reassign
+            // delete userInfo.password;
+
+            res.status(200).send({
+              success: true,
+              token: `JWT${token}`,
+              accessToken: apiToken,
+              userInfo,
+            });
+          }
+        });
+      } else {
+        res.status(400).send({
+          success: false,
+          msg: 'User doesnt exists',
         });
       }
-      const token = jwt.encode(user, 'foo');
-      const apiToken = jsonwebtoken.sign(
-        { id: user.dataValues.id },
-        process.env.JWT_KEY,
-        {
-          expiresIn: 86400, // 24 hours
-        }
-      );
-
-      // eslint-disable-next-line no-param-reassign
-      delete user.password;
-
-      res.status(200).send({
-        success: true,
-        token: `JWT${token}`,
-        accessToken: apiToken,
-        user,
-      });
-    } else {
-      res.status(400).send({
-        success: false,
-        msg: 'User doesnt exists',
-      });
-    }
-    console.log('got user here ====>', user.dataValues.username);
-  });
+    });
 });
 
 router.post('/signup', (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const {
+    email,
+    name,
+    weight,
+    height,
+    DOB,
+    stepsGoal,
+    heartPointsGoal,
+    sleepTime,
+    awakeTime,
+    gender,
+    password,
+  } = req.body;
 
   if (!email || !password) {
     res.json({
@@ -113,8 +136,6 @@ router.post('/signup', (req, res) => {
       msg: 'Please Enter Valid Email & Password',
     });
   } else {
-    const hashPassword = bcrypt.hashSync(password, 8);
-
     User.findOne({
       where: {
         email: req.body.email,
@@ -126,18 +147,37 @@ router.post('/signup', (req, res) => {
           msg: 'Email Already exists',
         });
       } else {
-        sequelize
-          .sync()
-          .then(() =>
-            User.create({
-              username: firstName,
-              email,
-              password: hashPassword,
-            })
-          )
-          .then(() => {
-            res.status(200).send(`User Created Sucessfully`);
-          });
+        try {
+          sequelize
+            .sync()
+            .then(() =>
+              User.create({
+                email,
+                name,
+                weight,
+                height,
+                DOB,
+                stepsGoal,
+                heartPointsGoal,
+                sleepTime,
+                awakeTime,
+                gender,
+              })
+            )
+            .then(() => {
+              const hashPassword = bcrypt.hashSync(password, 8);
+              userAuth
+                .create({
+                  email,
+                  password: hashPassword,
+                })
+                .then(() => {
+                  res.status(200).send(`User Created Sucessfully`);
+                });
+            });
+        } catch (error) {
+          console.log('got error here ========>', error);
+        }
       }
     });
   }
