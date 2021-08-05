@@ -31,5 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'user',
     }
   );
+  user.associate = (models) => {
+    console.log('models', models);
+    user.hasMany(models.weight, {
+      foreignKey: {
+        name: 'userID',
+        allowNull: false,
+      },
+      as: 'weights',
+    });
+  };
   return user;
 };

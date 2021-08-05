@@ -6,46 +6,46 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       weight: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       height: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       DOB: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       stepsGoal: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       heartPointsGoal: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       sleepTime: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       awakeTime: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       gender: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('users');
-  }
+  },
 };
