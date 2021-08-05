@@ -95,6 +95,7 @@ Controller.create = (req, res) => {
 
 // Find all published Activitiess
 Controller.findAllPublished = (req, res) => {
+  res.send('hello there');
   // Activities.findAll()
   //   .then((data) => {
   //     res.send(data);
