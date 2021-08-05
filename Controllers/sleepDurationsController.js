@@ -4,6 +4,8 @@ const { sleepDurations } = db;
 
 const { Op } = db.Sequelize;
 
+const Controller = {};
+
 function validateCreateRequest(req, res) {
   const { body } = req;
   console.log('request', req.body);
@@ -30,7 +32,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-exports.create = (req, res) => {
+Controller.create = (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const sleepDurationsBody = {
@@ -53,7 +55,7 @@ exports.create = (req, res) => {
 };
 
 // Find all published Sleep Durations
-exports.findAllPublished = (req, res) => {
+Controller.findAllPublished = (req, res) => {
   sleepDurations
     .findAll()
     .then((data) => {
@@ -69,16 +71,18 @@ exports.findAllPublished = (req, res) => {
 };
 
 // Retrieve all Sleep Durations from the database.
-exports.findAll = (req, res) => {};
+Controller.findAll = (req, res) => {};
 
 // Find a single Sleep Durations with an id
-exports.findOne = (req, res) => {};
+Controller.findOne = (req, res) => {};
 
 // Update a Sleep Durations by the id in the request
-exports.update = (req, res) => {};
+Controller.update = (req, res) => {};
 
 // Delete a Sleep Durations with the specified id in the request
-exports.delete = (req, res) => {};
+Controller.delete = (req, res) => {};
 
 // Delete all Sleep Durations from the database.
-exports.deleteAll = (req, res) => {};
+Controller.deleteAll = (req, res) => {};
+
+module.exports = Controller;

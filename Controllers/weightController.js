@@ -4,6 +4,7 @@ const { weight } = db;
 
 const { Op } = db.Sequelize;
 
+const Controller = {};
 function validateCreateRequest(req, res) {
   const { body } = req;
   console.log('request', req.body);
@@ -25,7 +26,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-exports.create = (req, res) => {
+Controller.create = (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const sleepDurationsBody = {
@@ -48,7 +49,7 @@ exports.create = (req, res) => {
 };
 
 // Find all published weight
-exports.findAllPublished = (req, res) => {
+Controller.findAllPublished = (req, res) => {
   weight
     .findAll()
     .then((data) => {
@@ -62,16 +63,18 @@ exports.findAllPublished = (req, res) => {
 };
 
 // Retrieve all weight from the database.
-exports.findAll = (req, res) => {};
+Controller.findAll = (req, res) => {};
 
 // Find a single weight with an id
-exports.findOne = (req, res) => {};
+Controller.findOne = (req, res) => {};
 
 // Update a weight by the id in the request
-exports.update = (req, res) => {};
+Controller.update = (req, res) => {};
 
 // Delete a weight with the specified id in the request
-exports.delete = (req, res) => {};
+Controller.delete = (req, res) => {};
 
 // Delete all weight from the database.
-exports.deleteAll = (req, res) => {};
+Controller.deleteAll = (req, res) => {};
+
+module.exports = Controller;

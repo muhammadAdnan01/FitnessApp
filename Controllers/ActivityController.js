@@ -4,6 +4,8 @@ const Activities = db.activities;
 
 const { Op } = db.Sequelize;
 
+const Controller = {};
+
 function validateCreateRequest(req, res) {
   const { body } = req;
   console.log('request', req.body);
@@ -60,7 +62,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-exports.create = (req, res) => {
+Controller.create = (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const activityBody = {
@@ -92,8 +94,7 @@ exports.create = (req, res) => {
 };
 
 // Find all published Activitiess
-exports.findAllPublished = (req, res) => {
-  res.send('got activity here ');
+Controller.findAllPublished = (req, res) => {
   // Activities.findAll()
   //   .then((data) => {
   //     res.send(data);
@@ -107,16 +108,18 @@ exports.findAllPublished = (req, res) => {
 };
 
 // Retrieve all Activitiess from the database.
-exports.findAll = (req, res) => {};
+Controller.findAll = (req, res) => {};
 
 // Find a single Activities with an id
-exports.findOne = (req, res) => {};
+Controller.findOne = (req, res) => {};
 
 // Update a Activities by the id in the request
-exports.update = (req, res) => {};
+Controller.update = (req, res) => {};
 
 // Delete a Activities with the specified id in the request
-exports.delete = (req, res) => {};
+Controller.delete = (req, res) => {};
 
 // Delete all Activitiess from the database.
-exports.deleteAll = (req, res) => {};
+Controller.deleteAll = (req, res) => {};
+
+module.exports = Controller;

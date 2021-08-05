@@ -11,7 +11,9 @@ const sequelize = new Sequelize('todo_database', 'postgres', '1234', {
 const User = require('../models/user')(sequelize, Sequelize);
 const userAuth = require('../models/auth')(sequelize, Sequelize);
 
-exports.authenticateUser = (req, res) => {
+const Controller = {};
+
+Controller.authenticateUser = (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -70,7 +72,7 @@ exports.authenticateUser = (req, res) => {
       }
     });
 };
-exports.createUser = (req, res) => {
+Controller.createUser = (req, res) => {
   const {
     email,
     name,
@@ -137,3 +139,5 @@ exports.createUser = (req, res) => {
     });
   }
 };
+
+module.exports = Controller;
