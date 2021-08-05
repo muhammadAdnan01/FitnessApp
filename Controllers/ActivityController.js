@@ -93,16 +93,17 @@ exports.create = (req, res) => {
 
 // Find all published Activitiess
 exports.findAllPublished = (req, res) => {
-  Activities.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving Activities.',
-      });
-    });
+  res.send('got activity here ');
+  // Activities.findAll()
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || 'Some error occurred while retrieving Activities.',
+  //     });
+  //   });
 };
 
 // Retrieve all Activitiess from the database.
