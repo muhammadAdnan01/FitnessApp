@@ -28,7 +28,7 @@ function validateCreateRequest(req, res) {
 // Create and Save a new Activity
 Controller.create = (req, res) => {
   const { body } = req;
-  validateCreateRequest(req, res);
+  // validateCreateRequest(req, res);
   const sleepDurationsBody = {
     value: body.value,
     date: body.date,

@@ -48,5 +48,14 @@ db.activities = require('./activities')(sequelize, Sequelize);
 db.heartRate = require('./heartrate')(sequelize, Sequelize);
 db.sleepDurations = require('./sleepdurations')(sequelize, Sequelize);
 db.weight = require('./weight')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
+db.activitiesCategories = require('./activity_category')(sequelize, Sequelize);
+db.caloriesBurnRate = require('./calories_burn_rate')(sequelize, Sequelize);
+db.heartPoints = require('./heartpoints')(sequelize, Sequelize);
+db.effortRate = require('./effortrate')(sequelize, Sequelize);
+
+// DatabaseRelations
+
+// USER Relations
 
 module.exports = db;

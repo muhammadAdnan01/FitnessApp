@@ -6,34 +6,34 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       systolic: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       diastolic: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       time: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       userID: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('HeartRates');
-  }
+  },
 };

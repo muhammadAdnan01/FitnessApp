@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   weight.init(
     {
-      value: DataTypes.STRING,
+      vaue: DataTypes.STRING,
       date: DataTypes.DATE,
       time: DataTypes.TIME,
       userID: DataTypes.INTEGER,
@@ -23,5 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'weight',
     }
   );
+  weight.associate = (models) => {
+    weight.belongsTo(models.user, {
+      foreignKey: {
+        name: 'userID',
+        allowNull: false,
+      },
+      as: 'weights',
+    });
+  };
   return weight;
 };
