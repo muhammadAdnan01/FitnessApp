@@ -1,5 +1,5 @@
 const express = require('express');
-const weightController = require('../../Controllers/weightController');
+const weightController = require('../Controllers/weightController');
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 const express = require('express');
-const Activities = require('../../Controllers/ActivityController');
-const auth = require('../../middleware/auth');
+const Activities = require('../Controllers/ActivityController');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
