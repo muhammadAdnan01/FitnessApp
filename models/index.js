@@ -53,6 +53,8 @@ db.activitiesCategories = require('./activity_category')(sequelize, Sequelize);
 db.caloriesBurnRate = require('./calories_burn_rate')(sequelize, Sequelize);
 db.heartPoints = require('./heartpoints')(sequelize, Sequelize);
 db.effortRate = require('./effortrate')(sequelize, Sequelize);
+db.User = require('./user')(sequelize, Sequelize);
+db.Auth = require('./auth')(sequelize, Sequelize);
 
 // DatabaseRelations
 

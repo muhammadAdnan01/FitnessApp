@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   weight.init(
     {
-      vaue: DataTypes.STRING,
+      value: DataTypes.STRING,
       date: DataTypes.DATE,
       time: DataTypes.TIME,
       userID: DataTypes.INTEGER,
