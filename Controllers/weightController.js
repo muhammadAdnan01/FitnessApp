@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const { weight } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models/index');
 
 const Controller = {};
 function validateCreateRequest(req, res) {
@@ -35,7 +31,7 @@ Controller.create = (req, res) => {
     time: body.time,
     userID: body.userID || 45,
   };
-  weight
+  model.weight
     .create(sleepDurationsBody)
     .then((data) => {
       res.send(data);
@@ -50,7 +46,7 @@ Controller.create = (req, res) => {
 
 // Find all published weight
 Controller.findAllPublished = (req, res) => {
-  weight
+  model.weight
     .findAll()
     .then((data) => {
       res.send(data);

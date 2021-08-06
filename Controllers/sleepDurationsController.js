@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const { sleepDurations } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models/index');
 
 const Controller = {};
 
@@ -41,8 +37,7 @@ Controller.create = (req, res) => {
     date: body.date,
     userID: body.userID || 45,
   };
-  sleepDurations
-    .create(sleepDurationsBody)
+  model.SleepDurations.create(sleepDurationsBody)
     .then((data) => {
       res.send(data);
     })
@@ -56,8 +51,7 @@ Controller.create = (req, res) => {
 
 // Find all published Sleep Durations
 Controller.findAllPublished = (req, res) => {
-  sleepDurations
-    .findAll()
+  model.SleepDurations.findAll()
     .then((data) => {
       res.send(data);
     })

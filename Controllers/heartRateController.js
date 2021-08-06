@@ -1,11 +1,7 @@
-const db = require('../models/index');
-
-const { heartRate } = db;
+const model = require('../models/index');
 
 // eslint-disable-next-line import/order
 const moment = require('moment');
-
-const { Op } = db.Sequelize;
 
 const Controller = {};
 
@@ -47,8 +43,7 @@ Controller.create = (req, res) => {
   };
 
   // Save HeartRate in the database
-  heartRate
-    .create(heartRateBody)
+  model.HeartRate.create(heartRateBody)
     .then((data) => {
       res.send(data);
     })
@@ -62,8 +57,7 @@ Controller.create = (req, res) => {
 
 // Find all published HeartRates
 Controller.findAllPublished = (req, res) => {
-  heartRate
-    .findAll()
+  model.HeartRate.findAll()
     .then((data) => {
       res.send(data);
     })

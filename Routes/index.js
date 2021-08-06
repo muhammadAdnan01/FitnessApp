@@ -27,5 +27,6 @@ router.use('/activities', require('./Activities'));
 router.use('/heartRate', require('./HeartRate'));
 router.use('/Weight', require('./Weight'));
 router.use('/SleepDuration', require('./SleepDuration'));
+router.use('/User', require('./User'));
 
 module.exports = router;

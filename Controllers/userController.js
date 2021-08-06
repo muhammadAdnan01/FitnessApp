@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const { weight, User } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models');
 
 exports.findAllPublished = (req, res) => {};
 
@@ -13,14 +9,8 @@ exports.findAll = (req, res) => {};
 exports.findOne = (req, res) => {
   const { id } = req.params;
   console.log('id', id);
-  User.findByPk(id, {
-    include: [
-      {
-        model: weight,
-        as: 'weights',
-      },
-    ],
-  })
+  model.user
+    .findByPk(id)
     .then((data) => {
       console.log('data', data);
       res.send(data);

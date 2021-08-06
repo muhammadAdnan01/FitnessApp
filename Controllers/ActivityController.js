@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const Activities = db.activities;
-
-const { Op } = db.Sequelize;
+const model = require('../models');
 
 const Controller = {};
 
@@ -81,7 +77,7 @@ Controller.create = (req, res) => {
     location: body.location,
     userID: body.userID || null,
   };
-  Activities.create(activityBody)
+  model.Activities.create(activityBody)
     .then((data) => {
       res.send(data);
     })
@@ -95,17 +91,16 @@ Controller.create = (req, res) => {
 
 // Find all published Activitiess
 Controller.findAllPublished = (req, res) => {
-  res.send('hello there');
-  // Activities.findAll()
-  //   .then((data) => {
-  //     res.send(data);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || 'Some error occurred while retrieving Activities.',
-  //     });
-  //   });
+  model.Activities.findAll()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while retrieving Activities.',
+      });
+    });
 };
 
 // Retrieve all Activitiess from the database.

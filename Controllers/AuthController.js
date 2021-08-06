@@ -2,17 +2,10 @@ const { Sequelize, Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const jsonwebtoken = require('jsonwebtoken');
-
-const sequelize = new Sequelize('todo_database', 'postgres', '1234', {
-  host: 'localhost',
-  port: 5432,
-  dialect: 'postgres',
-});
-const User = require('../models/user')(sequelize, Sequelize);
-const userAuth = require('../models/auth')(sequelize, Sequelize);
+const model = require('../models');
 
 const Controller = {};
-
+console.log('odles', model);
 Controller.authenticateUser = (req, res) => {
   const { email, password } = req.body;
 
@@ -22,27 +15,28 @@ Controller.authenticateUser = (req, res) => {
       msg: 'Please Enter Email & Password',
     });
   }
-  userAuth
-    .findOne({
-      where: {
-        email: req.body.email,
-      },
-    })
-    .then((user) => {
-      console.log('got user here ======>', user);
-      if (user) {
-        const passwordIsValid = bcrypt.compareSync(password, user.password);
-        if (!passwordIsValid) {
-          res.status(401).send({
-            accessToken: null,
-            message: 'Invalid  Email OR Password!',
-          });
-        }
-        User.findOne({
+  model.Auth.findOne({
+    where: {
+      email: req.body.email,
+    },
+  }).then((user) => {
+    console.log('got user here ======>', user);
+    if (user) {
+      const passwordIsValid = bcrypt.compareSync(password, user.password);
+      if (!passwordIsValid) {
+        res.status(401).send({
+          accessToken: null,
+          message: 'Invalid  Email OR Password!',
+        });
+      }
+      model.user
+        .findOne({
           where: {
             email: req.body.email,
           },
-        }).then((userInfo) => {
+        })
+        .then((userInfo) => {
+          console.log('userInfo', process.env.JWT_KEY);
           if (userInfo) {
             const token = jwt.encode(userInfo, 'foo');
             const apiToken = jsonwebtoken.sign(
@@ -64,13 +58,13 @@ Controller.authenticateUser = (req, res) => {
             });
           }
         });
-      } else {
-        res.status(400).send({
-          success: false,
-          msg: 'User doesnt exists',
-        });
-      }
-    });
+    } else {
+      res.status(400).send({
+        success: false,
+        msg: 'User doesnt exists',
+      });
+    }
+  });
 };
 Controller.createUser = (req, res) => {
   const {
@@ -93,50 +87,50 @@ Controller.createUser = (req, res) => {
       msg: 'Please Enter Valid Email & Password',
     });
   } else {
-    User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    }).then((user) => {
-      if (user) {
-        res.status(400).send({
-          success: false,
-          msg: 'Email Already exists',
-        });
-      } else {
-        try {
-          sequelize
-            .sync()
-            .then(() =>
-              User.create({
-                email,
-                name,
-                weight,
-                height,
-                DOB,
-                stepsGoal,
-                heartPointsGoal,
-                sleepTime,
-                awakeTime,
-                gender,
-              })
-            )
-            .then(() => {
-              const hashPassword = bcrypt.hashSync(password, 8);
-              userAuth
-                .create({
+    model.user
+      .findOne({
+        where: {
+          email: req.body.email,
+        },
+      })
+      .then((user) => {
+        if (user) {
+          res.status(400).send({
+            success: false,
+            msg: 'Email Already exists',
+          });
+        } else {
+          try {
+            model.sequelize
+              .sync()
+              .then(() =>
+                model.user.create({
+                  email,
+                  name,
+                  weight,
+                  height,
+                  DOB,
+                  stepsGoal,
+                  heartPointsGoal,
+                  sleepTime,
+                  awakeTime,
+                  gender,
+                })
+              )
+              .then(() => {
+                const hashPassword = bcrypt.hashSync(password, 8);
+                model.Auth.create({
                   email,
                   password: hashPassword,
-                })
-                .then(() => {
+                }).then(() => {
                   res.status(200).send(`User Created Sucessfully`);
                 });
-            });
-        } catch (error) {
-          console.log('got error here ========>', error);
+              });
+          } catch (error) {
+            console.log('got error here ========>', error);
+          }
         }
-      }
-    });
+      });
   }
 };
 
