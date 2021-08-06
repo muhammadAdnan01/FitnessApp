@@ -1,6 +1,6 @@
 const express = require('express');
 
-const heartRate = require('../../Controllers/heartRateController');
+const heartRate = require('../Controllers/heartRateController');
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const sleepDurations = require('../../Controllers/sleepDurationsController');
+const sleepDurations = require('../Controllers/sleepDurationsController');
 
 const router = express.Router();
 
