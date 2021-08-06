@@ -31,7 +31,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new HeartRate
-Controller.create = (req, res) => {
+Controller.create = async (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const heartRateBody = {
@@ -42,17 +42,17 @@ Controller.create = (req, res) => {
     userID: body.UserID || 23,
   };
 
-  // Save HeartRate in the database
-  model.HeartRate.create(heartRateBody)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the HeartRate.',
-      });
+  try {
+    const data = await model.HeartRate.create(heartRateBody);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message ||
+        'Some error occurred while retrieving Sleep Durations.',
     });
+  }
+  // Save HeartRate in the database
 };
 
 // Find all published HeartRates

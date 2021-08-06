@@ -1,12 +1,10 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const jsonwebtoken = require('jsonwebtoken');
 const model = require('../models');
 
 const Controller = {};
-console.log('odles', model);
-Controller.authenticateUser = (req, res) => {
+Controller.authenticateUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -15,12 +13,13 @@ Controller.authenticateUser = (req, res) => {
       msg: 'Please Enter Email & Password',
     });
   }
-  model.Auth.findOne({
-    where: {
-      email: req.body.email,
-    },
-  }).then((user) => {
-    console.log('got user here ======>', user);
+
+  try {
+    const user = await model.Auth.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
     if (user) {
       const passwordIsValid = bcrypt.compareSync(password, user.password);
       if (!passwordIsValid) {
@@ -29,44 +28,43 @@ Controller.authenticateUser = (req, res) => {
           message: 'Invalid  Email OR Password!',
         });
       }
-      model.user
-        .findOne({
-          where: {
-            email: req.body.email,
-          },
-        })
-        .then((userInfo) => {
-          console.log('userInfo', process.env.JWT_KEY);
-          if (userInfo) {
-            const token = jwt.encode(userInfo, 'foo');
-            const apiToken = jsonwebtoken.sign(
-              { id: userInfo.dataValues.id },
-              process.env.JWT_KEY,
-              {
-                expiresIn: 86400, // 24 hours
-              }
-            );
-
-            // eslint-disable-next-line no-param-reassign
-            // delete userInfo.password;
-
-            res.status(200).send({
-              success: true,
-              token: `JWT${token}`,
-              accessToken: apiToken,
-              userInfo,
-            });
+      const userInfo = await model.user.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
+      if (userInfo) {
+        const token = jwt.encode(userInfo, 'foo');
+        const apiToken = jsonwebtoken.sign(
+          { id: userInfo.dataValues.id },
+          process.env.JWT_KEY,
+          {
+            expiresIn: 86400, // 24 hours
           }
+        );
+
+        res.status(200).send({
+          success: true,
+          token: `JWT${token}`,
+          accessToken: apiToken,
+          userInfo,
         });
+      }
     } else {
       res.status(400).send({
         success: false,
         msg: 'User doesnt exists',
       });
     }
-  });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      msg: error,
+    });
+  }
 };
-Controller.createUser = (req, res) => {
+
+Controller.createUser = async (req, res) => {
   const {
     email,
     name,
@@ -87,50 +85,44 @@ Controller.createUser = (req, res) => {
       msg: 'Please Enter Valid Email & Password',
     });
   } else {
-    model.user
-      .findOne({
-        where: {
-          email: req.body.email,
-        },
-      })
-      .then((user) => {
-        if (user) {
-          res.status(400).send({
-            success: false,
-            msg: 'Email Already exists',
-          });
-        } else {
-          try {
-            model.sequelize
-              .sync()
-              .then(() =>
-                model.user.create({
-                  email,
-                  name,
-                  weight,
-                  height,
-                  DOB,
-                  stepsGoal,
-                  heartPointsGoal,
-                  sleepTime,
-                  awakeTime,
-                  gender,
-                })
-              )
-              .then(() => {
-                const hashPassword = bcrypt.hashSync(password, 8);
-                model.Auth.create({
-                  email,
-                  password: hashPassword,
-                }).then(() => {
-                  res.status(200).send(`User Created Sucessfully`);
-                });
-              });
-          } catch (error) {
-            console.log('got error here ========>', error);
-          }
-        }
+    const user = await model.user.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (user) {
+      res.status(400).send({
+        success: false,
+        msg: 'Email Already exists',
       });
+    } else {
+      try {
+        model.sequelize.sync();
+        model.user.create({
+          email,
+          name,
+          weight,
+          height,
+          DOB,
+          stepsGoal,
+          heartPointsGoal,
+          sleepTime,
+          awakeTime,
+          gender,
+        });
+        const hashPassword = bcrypt.hashSync(password, 8);
+        model.Auth.create({
+          email,
+          password: hashPassword,
+        });
+        res.status(200).send(`User Created Sucessfully`);
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          errormsg: error,
+        });
+      }
+    }
   }
 };
 

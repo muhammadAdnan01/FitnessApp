@@ -50,18 +50,17 @@ Controller.create = (req, res) => {
 };
 
 // Find all published Sleep Durations
-Controller.findAllPublished = (req, res) => {
-  model.SleepDurations.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          'Some error occurred while retrieving Sleep Durations.',
-      });
+Controller.findAllPublished = async (req, res) => {
+  try {
+    const data = model.SleepDurations.findAll();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message ||
+        'Some error occurred while retrieving Sleep Durations.',
     });
+  }
 };
 
 // Retrieve all Sleep Durations from the database.

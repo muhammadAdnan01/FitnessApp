@@ -58,7 +58,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-Controller.create = (req, res) => {
+Controller.create = async (req, res) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const activityBody = {
@@ -77,30 +77,30 @@ Controller.create = (req, res) => {
     location: body.location,
     userID: body.userID || null,
   };
-  model.Activities.create(activityBody)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the Weight.',
-      });
+
+  try {
+    const data = await model.Activities.create(activityBody);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message:
+        error.message || 'Some error occurred while creating the Weight.',
     });
+  }
 };
 
 // Find all published Activitiess
-Controller.findAllPublished = (req, res) => {
-  model.Activities.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving Activities.',
-      });
+Controller.findAllPublished = async (req, res) => {
+  try {
+    const data = await model.Activities.findAll();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message || 'Some error occurred while retrieving Activities.',
     });
+  }
 };
 
 // Retrieve all Activitiess from the database.
