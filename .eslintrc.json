@@ -21,6 +21,7 @@
     "no-plusplus": "off",
     "no-process-exit": "off",
     "class-methods-use-this": "off",
-    "import/no-dynamic-require": "off"
+    "import/no-dynamic-require": "off",
+    "strict": "off"
   }
 }
