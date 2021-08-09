@@ -31,7 +31,8 @@ CREATE FUNCTION public.sleep_time()
     COST 100
     VOLATILE NOT LEAKPROOF
 AS $BODY$
-BEGIN INSERT INTO SleepDurations("sleepTime","awakeTime","userID","createdAt","updatedAt") values(new.sleepTime,new.awakeTime,new.id,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+BEGIN INSERT INTO "SleepDurations"("sleepTime","awakeTime","userID","createdAt","updatedAt") 
+values(new."sleepTime",new."awakeTime",new."id",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 RETURN NEW;
 END;
 $BODY$;
