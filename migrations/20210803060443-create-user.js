@@ -1,4 +1,12 @@
 'use strict';
+
+const fs = require('fs');
+
+const SQLTrigger = fs
+  .readFileSync(
+    require('path').resolve(__dirname, './Triggers/User_Trigger.sql')
+  )
+  .toString();
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
@@ -47,6 +55,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    queryInterface.sequelize.query(SQLTrigger);
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('users');
