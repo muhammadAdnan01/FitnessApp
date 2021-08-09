@@ -1,6 +1,7 @@
 'use strict';
 
 const { Model } = require('sequelize');
+const model = require('./index');
 
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
@@ -31,15 +32,18 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'user',
     }
   );
-  user.associate = (models) => {
-    console.log('models', models);
-    user.hasMany(models.weight, {
-      foreignKey: {
-        name: 'userID',
-        allowNull: false,
-      },
-      as: 'weights',
+  user.afterCreate('addWeight', (user, options) => {
+    console.log('MODEL', sequelize);
+    sequelize.models.weight.create({
+      userID: user.id,
+      value: user.weight,
+      date: new Date(),
+      // time: new Date(),
     });
-  };
+  });
+  user.create({});
+
+  user.sync();
+
   return user;
 };
