@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       notes: DataTypes.STRING,
       location: DataTypes.STRING,
       userID: DataTypes.INTEGER,
+      burnRate: DataTypes.STRING,
       heartPoints: DataTypes.STRING,
-      caloriesBurnRate: DataTypes.STRING,
     },
     {
       sequelize,
