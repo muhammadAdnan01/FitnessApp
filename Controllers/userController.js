@@ -1,35 +1,21 @@
-const db = require('../models/index');
-
-const { weight, User } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models');
 
 exports.findAllPublished = (req, res) => {};
 
 // Retrieve all user from the database.
-exports.findAll = (req, res) => {};
+exports.findAll = async (req, res) => {};
 
 // Find a single user with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const { id } = req.params;
-  console.log('id', id);
-  User.findByPk(id, {
-    include: [
-      {
-        model: weight,
-        as: 'weights',
-      },
-    ],
-  })
-    .then((data) => {
-      console.log('data', data);
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving user.',
-      });
+  try {
+    const data = await model.user.findByPk(id);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || 'Some error occurred while retrieving user.',
     });
+  }
 };
 
 // Update a user by the id in the request

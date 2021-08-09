@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 'use strict';
 
 const fs = require('fs');
@@ -29,10 +30,13 @@ fs.readdirSync(__dirname)
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach((file) => {
+    console.log(path.join(__dirname, file));
+
     const model = require(path.join(__dirname, file))(
       sequelize,
       Sequelize.DataTypes
     );
+
     db[model.name] = model;
   });
 
@@ -44,20 +48,5 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.activities = require('./activities')(sequelize, Sequelize);
-db.heartRate = require('./heartrate')(sequelize, Sequelize);
-db.sleepDurations = require('./sleepdurations')(sequelize, Sequelize);
-db.weight = require('./weight')(sequelize, Sequelize);
-db.user = require('./user')(sequelize, Sequelize);
-db.activitiesCategories = require('./activity_category')(sequelize, Sequelize);
-db.caloriesBurnRate = require('./calories_burn_rate')(sequelize, Sequelize);
-db.heartPoints = require('./heartpoints')(sequelize, Sequelize);
-db.effortRate = require('./effortrate')(sequelize, Sequelize);
-db.User = require('./user')(sequelize, Sequelize);
-db.Auth = require('./auth')(sequelize, Sequelize);
-
-// DatabaseRelations
-
-// USER Relations
 
 module.exports = db;

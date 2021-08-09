@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const { weight } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models/index');
 
 const Controller = {};
 function validateCreateRequest(req, res) {
@@ -26,7 +22,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-Controller.create = (req, res) => {
+Controller.create = async (req, res) => {
   const { body } = req;
   // validateCreateRequest(req, res);
   const sleepDurationsBody = {
@@ -35,31 +31,28 @@ Controller.create = (req, res) => {
     time: body.time,
     userID: body.userID || 45,
   };
-  weight
-    .create(sleepDurationsBody)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the Weight.',
-      });
+
+  try {
+    const data = await model.weight.create(sleepDurationsBody);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message || 'Some error occurred while creating the Weight.',
     });
+  }
 };
 
 // Find all published weight
-Controller.findAllPublished = (req, res) => {
-  weight
-    .findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving weight.',
-      });
+Controller.findAllPublished = async (req, res) => {
+  try {
+    const data = await model.weight.findAll();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || 'Some error occurred while retrieving weight.',
     });
+  }
 };
 
 // Retrieve all weight from the database.

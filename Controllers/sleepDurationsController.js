@@ -1,8 +1,4 @@
-const db = require('../models/index');
-
-const { sleepDurations } = db;
-
-const { Op } = db.Sequelize;
+const model = require('../models/index');
 
 const Controller = {};
 
@@ -41,8 +37,7 @@ Controller.create = (req, res) => {
     date: body.date,
     userID: body.userID || 45,
   };
-  sleepDurations
-    .create(sleepDurationsBody)
+  model.SleepDurations.create(sleepDurationsBody)
     .then((data) => {
       res.send(data);
     })
@@ -55,19 +50,17 @@ Controller.create = (req, res) => {
 };
 
 // Find all published Sleep Durations
-Controller.findAllPublished = (req, res) => {
-  sleepDurations
-    .findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          'Some error occurred while retrieving Sleep Durations.',
-      });
+Controller.findAllPublished = async (req, res) => {
+  try {
+    const data = model.SleepDurations.findAll();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message ||
+        'Some error occurred while retrieving Sleep Durations.',
     });
+  }
 };
 
 // Retrieve all Sleep Durations from the database.
