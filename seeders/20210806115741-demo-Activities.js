@@ -14,7 +14,7 @@ module.exports = {
         notes: 'ajshdj',
         location: 'lahore',
         heartPoints: '20',
-        caloriesBurnRate: '30',
+        burnRate: '30',
         userID: 1,
         createdAt: new Date(),
         updatedAt: new Date(),

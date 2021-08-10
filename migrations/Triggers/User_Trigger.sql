@@ -45,7 +45,7 @@ ALTER FUNCTION public.sleep_time()
 
  CREATE TRIGGER add_sleep_time
     AFTER INSERT
-    ON public.users
+    ON public.user
     FOR EACH ROW
     EXECUTE FUNCTION public.sleep_time();
 

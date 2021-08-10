@@ -9,6 +9,7 @@ module.exports = {
         name: 'test User',
         weight: '20 kg',
         height: '5ft 8in',
+        email: 'test@test.com',
         DOB: new Date(),
         stepsGoal: 100,
         heartPointsGoal: '100',

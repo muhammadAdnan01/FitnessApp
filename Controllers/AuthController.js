@@ -20,6 +20,7 @@ Controller.authenticateUser = async (req, res) => {
         email: req.body.email,
       },
     });
+    // console.log('got User here ======>', user);
     if (user) {
       const passwordIsValid = bcrypt.compareSync(password, user.password);
       if (!passwordIsValid) {
@@ -28,11 +29,13 @@ Controller.authenticateUser = async (req, res) => {
           message: 'Invalid  Email OR Password!',
         });
       }
+
       const userInfo = await model.user.findOne({
         where: {
           email: req.body.email,
         },
       });
+      console.log('userInfo ========>', userInfo);
       if (userInfo) {
         const token = jwt.encode(userInfo, 'foo');
         const apiToken = jsonwebtoken.sign(
@@ -98,7 +101,7 @@ Controller.createUser = async (req, res) => {
     } else {
       try {
         model.sequelize.sync();
-        model.user.create({
+        await model.user.create({
           email,
           name,
           weight,
@@ -111,7 +114,7 @@ Controller.createUser = async (req, res) => {
           gender,
         });
         const hashPassword = bcrypt.hashSync(password, 8);
-        model.Auth.create({
+        await model.Auth.create({
           email,
           password: hashPassword,
         });
