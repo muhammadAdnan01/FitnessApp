@@ -1,7 +1,8 @@
-const model = require('../models/index');
+import { Request, Response } from 'express';
+const model = require('../../models/index');
 
-const Controller = {};
-function validateCreateRequest(req, res) {
+const Controller: any = {};
+function validateCreateRequest(req: Request, res: Response) {
   const { body } = req;
   console.log('request', req.body);
   if (!body) {
@@ -22,7 +23,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-Controller.create = async (req, res) => {
+Controller.create = async (req: Request, res: Response) => {
   const { body } = req;
   // validateCreateRequest(req, res);
   const sleepDurationsBody = {
@@ -44,7 +45,7 @@ Controller.create = async (req, res) => {
 };
 
 // Find all published weight
-Controller.findAllPublished = async (req, res) => {
+Controller.findAllPublished = async (req: Request, res: Response) => {
   try {
     const data = await model.weight.findAll();
     res.send(data);
@@ -56,18 +57,18 @@ Controller.findAllPublished = async (req, res) => {
 };
 
 // Retrieve all weight from the database.
-Controller.findAll = (req, res) => {};
+Controller.findAll = (req: Request, res: Response) => {};
 
 // Find a single weight with an id
-Controller.findOne = (req, res) => {};
+Controller.findOne = (req: Request, res: Response) => {};
 
 // Update a weight by the id in the request
-Controller.update = (req, res) => {};
+Controller.update = (req: Request, res: Response) => {};
 
 // Delete a weight with the specified id in the request
-Controller.delete = (req, res) => {};
+Controller.delete = (req: Request, res: Response) => {};
 
 // Delete all weight from the database.
-Controller.deleteAll = (req, res) => {};
+Controller.deleteAll = (req: Request, res: Response) => {};
 
 module.exports = Controller;

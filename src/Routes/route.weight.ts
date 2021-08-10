@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const weightController = require('../Controllers/weightController');
 
 const router = express.Router();

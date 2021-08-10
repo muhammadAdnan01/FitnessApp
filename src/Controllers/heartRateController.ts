@@ -1,11 +1,12 @@
-const model = require('../models/index');
+import { Request, Response } from 'express';
+const model = require('../../models/index');
 
 // eslint-disable-next-line import/order
 const moment = require('moment');
 
-const Controller = {};
+const Controller: any = {};
 
-function validateCreateRequest(req, res) {
+function validateCreateRequest(req: Request, res: Response) {
   const { body } = req;
   console.log('request', req.body);
   if (!body) {
@@ -31,7 +32,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new HeartRate
-Controller.create = async (req, res) => {
+Controller.create = async (req: Request, res: Response) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const heartRateBody = {
@@ -56,12 +57,12 @@ Controller.create = async (req, res) => {
 };
 
 // Find all published HeartRates
-Controller.findAllPublished = (req, res) => {
+Controller.findAllPublished = (req: Request, res: Response) => {
   model.HeartRate.findAll()
-    .then((data) => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch((err) => {
+    .catch((err: any) => {
       res.status(500).send({
         message:
           err.message || 'Some error occurred while retrieving HeartRates.',
@@ -70,17 +71,17 @@ Controller.findAllPublished = (req, res) => {
 };
 
 // Retrieve all HeartRates from the database.
-Controller.findAll = (req, res) => {};
+Controller.findAll = (req: Request, res: Response) => {};
 
 // Find a single HeartRate with an id
-Controller.findOne = (req, res) => {};
+Controller.findOne = (req: Request, res: Response) => {};
 
 // Update a HeartRate by the id in the request
-Controller.update = (req, res) => {};
+Controller.update = (req: Request, res: Response) => {};
 
 // Delete a HeartRate with the specified id in the request
-Controller.delete = (req, res) => {};
+Controller.delete = (req: Request, res: Response) => {};
 
 // Delete all HeartRates from the database.
-Controller.deleteAll = (req, res) => {};
+Controller.deleteAll = (req: Request, res: Response) => {};
 module.exports = Controller;

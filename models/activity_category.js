@@ -1,7 +1,9 @@
 'use strict';
+
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class Activity_Category extends Model {
+  class ActivityCategory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  Activity_Category.init(
+  ActivityCategory.init(
     {
       type: DataTypes.STRING,
       activity_id: DataTypes.INTEGER,
@@ -22,5 +24,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Activity_Category',
     }
   );
-  return Activity_Category;
+  return ActivityCategory;
 };

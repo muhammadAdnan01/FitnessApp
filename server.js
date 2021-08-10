@@ -1,25 +1,22 @@
+"use strict";
 require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const app = express();
-const port = process.env.PORT || 3000;
-const { Client } = require('pg');
-
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+var port = process.env.PORT || 3000;
+var Client = require('pg').Client;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'todo_database',
-  password: '1234',
-  port: 5432,
+var client = new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'todo_database',
+    password: '1234',
+    port: 5432,
 });
 // -------------- Connecting with db ------- //
-client.connect().catch((err) => console.error(err));
+client.connect().catch(function (err) { return console.error(err); });
 // -------------- APP ROUTES ------- //
-app.use(require('./Routes'));
-
+app.use(require('./src/Routes'));
 app.listen(port);
 console.log('app is listening at port', port);

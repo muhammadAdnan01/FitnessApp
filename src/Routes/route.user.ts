@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 
 const user = require('../Controllers/userController');
 

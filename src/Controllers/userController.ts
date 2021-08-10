@@ -1,12 +1,13 @@
-const model = require('../models');
+import { Request, Response } from 'express';
+const model = require('../../models');
 
-exports.findAllPublished = (req, res) => {};
+exports.findAllPublished = (req: Request, res: Response) => {};
 
 // Retrieve all user from the database.
-exports.findAll = async (req, res) => {};
+exports.findAll = async (req: Request, res: Response) => {};
 
 // Find a single user with an id
-exports.findOne = async (req, res) => {
+exports.findOne = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const data = await model.user.findByPk(id);
@@ -19,10 +20,10 @@ exports.findOne = async (req, res) => {
 };
 
 // Update a user by the id in the request
-exports.update = (req, res) => {};
+exports.update = (req: Request, res: Response) => {};
 
 // Delete a user with the specified id in the request
-exports.delete = (req, res) => {};
+exports.delete = (req: Request, res: Response) => {};
 
 // Delete all user from the database.
-exports.deleteAll = (req, res) => {};
+exports.deleteAll = (req: Request, res: Response) => {};

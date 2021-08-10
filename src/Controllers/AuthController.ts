@@ -1,10 +1,11 @@
+import { Request, Response } from 'express';
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const jsonwebtoken = require('jsonwebtoken');
-const model = require('../models');
+const model = require('../../models');
 
-const Controller = {};
-Controller.authenticateUser = async (req, res) => {
+const Controller: any = {};
+Controller.authenticateUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -64,7 +65,7 @@ Controller.authenticateUser = async (req, res) => {
   }
 };
 
-Controller.createUser = async (req, res) => {
+Controller.createUser = async (req: Request, res: Response) => {
   const {
     email,
     name,

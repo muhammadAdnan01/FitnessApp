@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const authMiddleware = require('../middleware/auth');
@@ -20,8 +20,8 @@ const options = {
 
 const openApiSpecification = swaggerJsdoc(options);
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
-router.use(authMiddleware);
 router.use('/auth', require('./route.auth'));
+router.use(authMiddleware);
 router.use('/activities', require('./route.activities'));
 router.use('/heartRate', require('./route.hearRate'));
 router.use('/Weight', require('./route.weight'));

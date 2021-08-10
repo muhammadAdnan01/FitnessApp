@@ -1,7 +1,5 @@
-const express = require('express');
+import express from 'express';
 const Activities = require('../Controllers/ActivityController');
-const auth = require('../middleware/auth');
-
 const router = express.Router();
 
 router.get('/getActivity', Activities.findAllPublished);

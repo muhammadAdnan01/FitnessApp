@@ -1,8 +1,9 @@
-const model = require('../models');
+import { Request, Response } from 'express';
+const model = require('../../models');
 
-const Controller = {};
+const Controller: any = {};
 
-function validateCreateRequest(req, res) {
+function validateCreateRequest(req: Request, res: Response) {
   const { body } = req;
   console.log('request', req.body);
   if (!body) {
@@ -58,7 +59,7 @@ function validateCreateRequest(req, res) {
 }
 
 // Create and Save a new Activity
-Controller.create = async (req, res) => {
+Controller.create = async (req: Request, res: Response) => {
   const { body } = req;
   validateCreateRequest(req, res);
   const activityBody = {
@@ -91,7 +92,7 @@ Controller.create = async (req, res) => {
 };
 
 // Find all published Activitiess
-Controller.findAllPublished = async (req, res) => {
+Controller.findAllPublished = async (req: Request, res: Response) => {
   try {
     const data = await model.Activities.findAll();
     res.send(data);
@@ -104,18 +105,18 @@ Controller.findAllPublished = async (req, res) => {
 };
 
 // Retrieve all Activitiess from the database.
-Controller.findAll = (req, res) => {};
+Controller.findAll = (req: Request, res: Response) => {};
 
 // Find a single Activities with an id
-Controller.findOne = (req, res) => {};
+Controller.findOne = (req: Request, res: Response) => {};
 
 // Update a Activities by the id in the request
-Controller.update = (req, res) => {};
+Controller.update = (req: Request, res: Response) => {};
 
 // Delete a Activities with the specified id in the request
-Controller.delete = (req, res) => {};
+Controller.delete = (req: Request, res: Response) => {};
 
 // Delete all Activitiess from the database.
-Controller.deleteAll = (req, res) => {};
+Controller.deleteAll = (req: Request, res: Response) => {};
 
 module.exports = Controller;
